@@ -4,6 +4,7 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
+import {Link} from "react-router-dom"
 
 export default function MediaCard({element}) {
     return (
@@ -27,7 +28,9 @@ export default function MediaCard({element}) {
           <Typography variant="body">${element.price} COP</Typography>
         </CardContent>
         <CardActions>
-          <Button size="small" variant="contained" color="success">Ver detalles</Button>
+          <Link to={`/itemDetail/${element.id}`}>
+            <Button size="small" variant="contained" color="success">Ver detalles</Button>
+          </Link>
         </CardActions>
       </Card>
     );

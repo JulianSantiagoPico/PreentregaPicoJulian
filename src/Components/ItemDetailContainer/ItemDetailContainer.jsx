@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
 
-import { products } from "../../productsMock";
+import { products } from "../../productMock";
 import ItemCount from "../ItemCount/ItemCount";
 
 const ItemDetailContainer = () => {
@@ -16,6 +16,7 @@ const ItemDetailContainer = () => {
     <div>
       <h1>{productSelected.title}</h1>
       <img src={productSelected.img} alt="" />
+      <h4>{productSelected.description}</h4>
       <ItemCount stock={productSelected.stock} onAdd={onAdd} />
     </div>
   );
