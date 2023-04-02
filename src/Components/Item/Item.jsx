@@ -28,7 +28,7 @@ export default function MediaCard({element}) {
           <Typography variant="body">${element.price} COP</Typography>
         </CardContent>
         <CardActions>
-          <Link to={`/itemDetail/${element.id}`}>
+          <Link to={`/itemDetail/${element.id}`} style={{textDecoration: "none"}}>
             <Button size="small" variant="contained" color="success">Ver detalles</Button>
           </Link>
         </CardActions>

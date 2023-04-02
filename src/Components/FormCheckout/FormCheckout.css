@@ -1,0 +1,12 @@
+.formStyle{
+    flex-direction: column;
+    display: flex;
+    justify-content: space-evenly;
+    height: 50vh;
+    width: 20vw;
+}
+
+.inputStyle{
+    height: 5vh;
+    text-align: center;
+}

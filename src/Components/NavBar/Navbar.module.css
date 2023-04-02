@@ -20,3 +20,9 @@
     list-style: none;
     margin-right: 13rem;
 }
+
+.logoStyle{
+    width: 8vh;
+    height: 8vh;
+    margin-left: 0.5rem;
+}

@@ -1,23 +1,81 @@
 import { useParams } from "react-router-dom";
-
-import { products } from "../../productMock";
+import React, { useContext, useState, useEffect } from "react";
 import ItemCount from "../ItemCount/ItemCount";
 
+import { CartContext } from "../../Context/CartContext";
+
+import {getDoc, collection, doc} from "firebase/firestore"
+import { db } from "../../firebaseConfig";
+
+import Swal from "sweetalert2";
+import  "./ItemDetail.css";
+
 const ItemDetailContainer = () => {
+
   const { id } = useParams();
 
-  const productSelected = products.find((element) => element.id === Number(id));
+  const { agregarAlCarrito, getQuantityById } = useContext( CartContext )
+
+  const [productSelected, setProductSelected] = useState({})
+
+  useEffect(() => {
+    
+    const itemCollecion = collection(db, "products")
+    const ref = doc(itemCollecion, id)
+    
+    getDoc(ref)
+      .then( res => {
+        setProductSelected({
+          ...res.data(),
+          id: res.id
+        })
+      })
+
+  }, [id])
 
   const onAdd = (cantidad)=>{
-    console.log(`se agrego al carrito ${cantidad} productos `)
+
+    let producto = {
+     ...productSelected,
+      quantity: cantidad
+    }
+    
+    agregarAlCarrito(producto)
+    Swal.fire({
+      position: 'center',
+      icon: 'success',
+      title: 'Producto agregado exitosamente',
+      showConfirmButton: false,
+      timer: 1500
+    })
   }
 
+  
+
+  let quantity = getQuantityById(Number(id))
+
   return (
-    <div>
-      <h1>{productSelected.title}</h1>
-      <img src={productSelected.img} alt="" />
-      <h4>{productSelected.description}</h4>
-      <ItemCount stock={productSelected.stock} onAdd={onAdd} />
+    <div className={"containerItemDetail"}>
+      <div className={"containerImage"}>
+        <img src={productSelected.img} alt="" />
+      </div>
+
+      <div className={"containerDetail"}>
+        <h2 style={{ fontFamily: "monospace" }}>
+          <span style={{ fontSize: "23px" }}>Nombre:</span>{" "}
+          {productSelected.title}
+        </h2>
+        <h2 style={{ fontFamily: "monospace" }}>
+          <span style={{ fontSize: "23px" }}>Descripcion:</span>{" "}
+          {productSelected.description}
+        </h2>
+        <h2 style={{ fontFamily: "monospace" }}>
+          <span style={{ fontSize: "23px" }}>Precio:</span> $
+          {productSelected.price} COP
+        </h2>
+
+        <ItemCount onAdd={onAdd} stock={productSelected.stock} initial={quantity} />
+      </div>
     </div>
   );
 };
