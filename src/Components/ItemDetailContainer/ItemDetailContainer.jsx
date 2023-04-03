@@ -50,8 +50,6 @@ const ItemDetailContainer = () => {
     })
   }
 
-  
-
   let quantity = getQuantityById(Number(id))
 
   return (

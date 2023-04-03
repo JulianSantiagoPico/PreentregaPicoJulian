@@ -34,12 +34,12 @@ const Cart = () => {
   
   if(orderId){
     return (
-      <div>
-        <h4>
-          ¡Gracias por su compra! <br> El identificador de su compra es: {orderId} </br>
-        </h4>
+      <div style={{height: "80vh", display: "flex", alignItems: "center", justifyContent: "center", flexDirection: "column", }}>
 
-        <Link to="/"> Seguir comprando </Link>
+        <h2> ¡Gracias por su compra!</h2>
+        <h4 style={{marginBottom: "2rem"}}> El identificador de su compra es: {orderId} </h4>
+
+        <Link to="/"> <button style={{height:"5vh", width: "20vw"}}> Seguir comprando </button> </Link>
       </div>
     )
   }
@@ -87,8 +87,9 @@ const Cart = () => {
         <h1>El total del carrito es ${getTotalPrice()}</h1>
       </div>
       </div>
-        ) : <FormCheckout cart={cart} getTotalPrice={getTotalPrice} setOrderId={setOrderId} clearCart={clearCart}/>
-      }
+        ) : (
+        <FormCheckout cart={cart} getTotalPrice={getTotalPrice} setOrderId={setOrderId} clearCart={clearCart}/>
+        )}
     </div>
   )
 }

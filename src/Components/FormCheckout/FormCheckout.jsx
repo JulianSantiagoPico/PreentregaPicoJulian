@@ -5,9 +5,9 @@ import { db } from "../../firebaseConfig";
 import React, { useState } from "react";
 
 import "./FormCheckout.css"
+import { Link } from "react-router-dom";
 
-
-const FormCheckout = (cart, getTotalPrice, setOrderId, clearCart) => {
+const FormCheckout = ({cart, getTotalPrice, setOrderId, clearCart}) => {
 
   const [userData, setUserData] = useState({
     name: "",
@@ -18,7 +18,7 @@ const FormCheckout = (cart, getTotalPrice, setOrderId, clearCart) => {
   const handleSubmit = (e)=>{
     e.preventDefault()
 
-    let total= getTotalPrice()
+    let total = getTotalPrice()
     let order = {
       buyer: userData,
       items: cart,
@@ -36,6 +36,7 @@ const FormCheckout = (cart, getTotalPrice, setOrderId, clearCart) => {
       cart.map( (product) => {
         let refDoc = doc(db, "products", product.id) 
         updateDoc(refDoc, {stock: product.stock - product.quantity})
+        return product
       })
   };
 
@@ -48,8 +49,7 @@ const FormCheckout = (cart, getTotalPrice, setOrderId, clearCart) => {
         </h4>
       </div>
       
-      <form onSubmit={handleSubmit}>
-        <div className="formStyle">
+      <form onSubmit={handleSubmit} className="formStyle">
           <input 
             type="text" 
             placeholder="Nombre" 
@@ -69,9 +69,8 @@ const FormCheckout = (cart, getTotalPrice, setOrderId, clearCart) => {
             onChange={(e) => setUserData({...userData, phone: e.target.value})}
             className="inputStyle"/>
           
-          <button type="submit" style={{height:"10vh"}}> Comprar </button>
-
-        </div>
+          <button type="submit" style={{height:"8vh"}}> Comprar </button>
+          <Link to="/"> <button style={{height:"5vh", width: "20vw"}}> Cancelar </button> </Link>
       </form> 
     </div>
   )
